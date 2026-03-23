@@ -48,6 +48,58 @@ app.get("/users", async (req, res) => {
   }
 });
 
+app.put("/update-user/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const name = (req.body?.name ?? "").trim();
+
+  if (!id || isNaN(id)) {
+    return res.status(400).json({ error: "Valid user ID is required" });
+  }
+  if (!name) {
+    return res.status(400).json({ error: "name is required" });
+  }
+
+  try {
+    const [result] = await pool.execute(
+      "UPDATE users SET name = ? WHERE id = ?",
+      [name, id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ id, name });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update user" });
+  }
+});
+
+app.delete("/delete-user/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  if (!id || isNaN(id)) {
+    return res.status(400).json({ error: "Valid user ID is required" });
+  }
+
+  try {
+    const [result] = await pool.execute(
+      "DELETE FROM users WHERE id = ?",
+      [id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete user" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`API http://localhost:${PORT}`);
 });

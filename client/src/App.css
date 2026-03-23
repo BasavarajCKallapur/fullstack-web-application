@@ -75,3 +75,47 @@ li {
   color: #71717a;
   font-size: 0.875rem;
 }
+
+/* Edit and Delete Styles */
+.actions {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
+}
+
+.edit-btn {
+  background: #059669;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.edit-btn:hover {
+  background: #047857;
+}
+
+.delete-btn {
+  background: #dc2626;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+.edit-form {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  width: 100%;
+}
+
+.edit-form input {
+  flex: 1;
+  margin: 0;
+}
+
+.edit-form button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
